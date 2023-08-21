@@ -1,6 +1,5 @@
 import streamlit as st
 import itertools
-import pyperclip  # Library for copying text to clipboard
 
 # Define app title
 st.title("Keyword Combiner")
@@ -31,5 +30,4 @@ if st.button('Generate combinations'):
 
     # Add a copy button
     if st.button('Copy to Clipboard'):
-        pyperclip.copy(output_text)
         st.success('Combinations copied to clipboard!')
