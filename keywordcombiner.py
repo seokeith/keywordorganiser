@@ -6,7 +6,7 @@ import pandas as pd
 st.title("Keyword Combiner")
 
 # Define 5 columns of input
-col1, col2, col3, col4, col5 = st.beta_columns(5)
+col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     keywords1 = st.text_input('Enter keywords for Column 1', '').split(',')
 with col2:
