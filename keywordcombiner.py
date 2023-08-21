@@ -1,11 +1,12 @@
 import streamlit as st
 import itertools
+import pyperclip  # Library for copying text to clipboard
 
 # Define app title
 st.title("Keyword Combiner")
 
 # Define 5 columns of input
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4, col5 = st.beta_columns(5)
 with col1:
     keywords1 = st.text_input('Enter keywords for Column 1', '').split(',')
 with col2:
@@ -25,5 +26,10 @@ combinations = list(itertools.product(*all_keywords))
 
 if st.button('Generate combinations'):
     # Display combinations
-    for combination in combinations:
-        st.write(' '.join(combination))
+    output_text = '\n'.join([' '.join(combination) for combination in combinations])
+    st.text_area("Combinations", value=output_text, height=300)
+
+    # Add a copy button
+    if st.button('Copy to Clipboard'):
+        pyperclip.copy(output_text)
+        st.success('Combinations copied to clipboard!')
