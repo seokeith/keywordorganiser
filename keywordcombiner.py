@@ -1,12 +1,13 @@
 import streamlit as st
 import itertools
 import pandas as pd
+import io
 
 # Define app title
 st.title("Keyword Combiner")
 
 # Define 5 columns of input
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4, col5 = st.beta_columns(5)
 with col1:
     keywords1 = st.text_input('Enter keywords for Column 1', '').split(',')
 with col2:
@@ -33,7 +34,11 @@ if st.button('Generate combinations'):
     if st.button('Download CSV'):
         # Create a DataFrame from the combinations
         df = pd.DataFrame(combinations, columns=[f"Column {i+1}" for i in range(5)])
-        csv_file = df.to_csv(index=False)
+
+        # Save DataFrame to a CSV file-like object
+        csv_buffer = io.StringIO()
+        df.to_csv(csv_buffer, index=False)
+        csv_buffer.seek(0)
 
         # Offer the file as a download
-        st.download_button(label="Download CSV", data=csv_file, file_name="combinations.csv", mime="text/csv")
+        st.download_button(label="Download CSV", data=csv_buffer, file_name="combinations.csv", mime="text/csv")
